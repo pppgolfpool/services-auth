@@ -13,8 +13,8 @@ using PppPool.Common;
 
 public static AuthService GetAuthService()
 {
-    var connectionString = "PppPoolStorage".GetEnvVar();
-    var authTableService = new AuthTableService(connectionString, "users");
+    var connectionString = "AuthStorage".GetEnvVar();
+    var authTableService = new AuthTableService(connectionString, "auth");
 
     var jwtSecret = "JwtSecret".GetEnvVar();
     var cryptService = new CryptService(jwtSecret);
