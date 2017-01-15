@@ -1,5 +1,6 @@
 ﻿#load "..\Services\JwtService.csx"
 #load "..\Entities\AuthEntity.csx"
+#load "..\Services\AuthService.csx"
 
 #r "..\Common\PppPool.Common.dll"
 #r "..\Common\Microsoft.WindowsAzure.Storage.dll"
@@ -22,7 +23,7 @@ using PppPool.Common;
 // key(email, userId, name, roles, all), value=query parameter
 public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
 {
-    var jwt = await req.GetJwt("admin");
+    var jwt = await InlineAuthorize(req, "admin");
     if (jwt == null)
         return req.CreateError(HttpStatusCode.Unauthorized);
 
@@ -73,4 +74,25 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceW
     }
 
     return req.CreateError(HttpStatusCode.BadRequest);
+}
+
+public static async Task<Jwt> InlineAuthorize(HttpRequestMessage req, string role)
+{
+    if (req.Headers.Authorization == null)
+        return null;
+    if (req.Headers.Authorization.Scheme != "Bearer")
+        return null;
+
+    var authToken = req.Headers.Authorization.Parameter;
+
+    if (string.IsNullOrEmpty(role) || string.IsNullOrEmpty(authToken))
+        return null;
+
+    AuthService authService = GetAuthService();
+
+    var authEntity = await authService.AuthenticateAsync(authToken, role);
+
+    return authEntity == null
+        ? null
+        : new Jwt(authEntity.PartitionKey, authEntity.UserId, authEntity.Roles, authEntity.AuthToken, authEntity.Name);
 }
