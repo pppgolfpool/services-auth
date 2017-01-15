@@ -5,7 +5,7 @@
 #load "..\Entities\AuthEntity.csx"
 
 #r "..\Common\PppPool.Common.dll"
-#r "Microsoft.WindowsAzure.Storage"
+#r "..\Common\Microsoft.WindowsAzure.Storage.dll"
 #r "System.Xml.Linq"
 #r "Newtonsoft.Json"
 

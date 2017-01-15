@@ -1,3 +1,4 @@
+#load ".\CryptService.csx"
 #r "..\assemblies\Microsoft.IdentityModel.Tokens.dll"
 
 using System;

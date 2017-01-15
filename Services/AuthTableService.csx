@@ -1,5 +1,5 @@
 #load "..\Entities\AuthEntity.csx"
-#r "Microsoft.WindowsAzure.Storage"
+#r "..\Common\Microsoft.WindowsAzure.Storage.dll"
 
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;

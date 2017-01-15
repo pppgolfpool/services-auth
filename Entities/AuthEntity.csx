@@ -1,4 +1,4 @@
-﻿#r "Microsoft.WindowsAzure.Storage"
+﻿#r "..\Common\Microsoft.WindowsAzure.Storage.dll"
 
 using System;
 using Microsoft.WindowsAzure.Storage;
