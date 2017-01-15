@@ -26,6 +26,7 @@ public class AuthEntity : TableEntity
     public string Salt { get; set; }
     public string Roles { get; set; }
     public string UserId { get; set; }
+    public string Name { get; set; }
 
     public object GetResponseObject()
     {
@@ -35,6 +36,7 @@ public class AuthEntity : TableEntity
             authToken = AuthToken,
             authTokenExpires = Expires,
             userId = UserId,
+            name = Name ?? string.Empty,
             roles = string.Join(",", Roles)
         };
     }
